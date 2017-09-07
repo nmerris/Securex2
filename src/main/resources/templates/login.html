@@ -16,8 +16,10 @@
 <div class="container">
 
     <div class="starter-template">
-        <h1>Securex</h1>
-        <h3>Please login</h3>
+        <!--<h1>Securex</h1>-->
+        <h2 th:text="${message}"></h2>
+
+        <!--<h3>Please login</h3>-->
     </div>
     <br />
     <div th:if="${param.error}">
@@ -32,8 +34,9 @@
         <div><input type="submit" value="Sign In"/></div>
     </form>
 
+    <br/>
     <!-- register for new account -->
-
+    <a th:href="@{~/register}" class="btn btn-success">Create a new account</a>
 
 
 </div><!-- /.container -->

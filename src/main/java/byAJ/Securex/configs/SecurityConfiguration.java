@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .antMatchers("/", "/register")
                     .permitAll()
 
-                // also anyone can static folders
+                // also anyone can access static folders
                 .antMatchers( "/css/**", "/js/**")
                     .permitAll()
 
