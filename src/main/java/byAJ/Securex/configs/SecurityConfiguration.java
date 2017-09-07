@@ -34,13 +34,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/secure").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/userpage").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-                    .anyRequest().authenticated()
-                .antMatchers("/", "/setuprolesandusers", "/register")
-                    .permitAll() // so anyone can get to default route and my manual testing route
-                .antMatchers("/css/**", "/js/**", "/fonts/**", "/img/**", "/index")
-                    .permitAll();
+
+                // Librarians can access...
+                .antMatchers("/books/add", "/books/edit", "/books/delete")
+                    .access("hasRole('ROLE_LIBRARIAN')")
+
+                // users can access...
+                .antMatchers("/books/list")
+                    .access("hasRole('ROLE_USER') or hasRole('ROLE_LIBRARIAN')")
+
+                // anyone can access...
+                .antMatchers("/", "/register")
+                    .permitAll()
+
+                // also anyone can static folders
+                .antMatchers( "/css/**", "/js/**")
+                    .permitAll()
+
+                .anyRequest().authenticated();
+
 
         // login/out
         http
@@ -52,6 +64,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
                     .permitAll();
+
+        http
+                .csrf().disable();
+
+        http
+                .headers().frameOptions().disable();
     }
 
     @Override
