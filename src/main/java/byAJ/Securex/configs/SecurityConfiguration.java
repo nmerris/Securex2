@@ -1,5 +1,6 @@
 package byAJ.Securex.configs;
 
+import byAJ.Securex.SSUserDetailsService;
 import byAJ.Securex.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,22 +34,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                // always allow access to all our static folders
+                .antMatchers("/secure").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/userpage").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                    .anyRequest().authenticated()
+                .antMatchers("/", "/setuprolesandusers", "/register")
+                    .permitAll() // so anyone can get to default route and my manual testing route
                 .antMatchers("/css/**", "/js/**", "/fonts/**", "/img/**", "/index")
-                .permitAll();
-//                .authorizeRequests().anyRequest().authenticated();
+                    .permitAll();
+
+        // login/out
         http
                 .formLogin().failureUrl("/login?error")
-                .defaultSuccessUrl("/")
-                .loginPage("/login")
-                .permitAll()
+//                .defaultSuccessUrl("/")
+                .and()
+                .formLogin().loginPage("/login")
+                    .permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-                .permitAll();
+                    .permitAll();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("pass").roles("USER");
+
+        auth.userDetailsService(userDetailsServiceBean());
+//        auth.inMemoryAuthentication().withUser("user").password("pass").roles("USER");
     }
 }

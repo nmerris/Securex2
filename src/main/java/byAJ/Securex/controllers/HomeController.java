@@ -1,6 +1,10 @@
 package byAJ.Securex.controllers;
 
+import byAJ.Securex.UserService;
 import byAJ.Securex.models.User;
+import byAJ.Securex.repositories.RoleRepository;
+import byAJ.Securex.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +14,18 @@ import javax.validation.Valid;
 
 @Controller
 public class HomeController {
+
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    UserService userService;
+
+
 
     @RequestMapping("/")
     public String index(){
@@ -50,15 +66,15 @@ public class HomeController {
                 return "redirect:/books/list";
             }
             else { // must be ROLE_LIBRARIAN
-                userService.saveAdmin(user);
+                userService.saveLibrarian(user);
                 model.addAttribute("message", "ROLE_LIBRARIAN account successfully created!");
                 // go to add book
                 return "redirect:/books/add";
             }
         }
 
-        return "index";
-
     }
+
+
 
 }
