@@ -74,6 +74,8 @@ public class HomeController {
         else {
             model.addAttribute("message", "Welcome " + currentUser.getFullName());
             model.addAttribute("books", bookRepository.findAll());
+            model.addAttribute("hide", true); // hide the edit and delete links for a normal user
+            // note: they are still restricted via spring security, but this way user won't be confused and get angry
             return "listbooks";
         }
 

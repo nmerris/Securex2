@@ -36,7 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
 
                 // Librarians can access...
-                .antMatchers("/books/add", "/books/edit", "/books/delete")
+                // if you don't add the /**, any authenticated user will be able to go to /books/edit/3 or whatever
+                .antMatchers("/books/add/**", "/books/edit/**", "/books/delete/**")
                     .access("hasRole('ROLE_LIBRARIAN')")
 
                 // users can access...

@@ -25,13 +25,14 @@
             <th>Cover</th>
             <th>Title</th>
             <th>Author</th>
-            <th>Actions</th>
+            <th th:classappend="${hide ? 'hidden' : ''}">Actions</th>
         </tr>
         <tr th:each="row : ${books}">
             <td><img class="book-list-thumb" th:src="${row.image}"></td>
             <td th:text="${row.title}"></td>
             <td th:text="${row.author}"></td>
-            <td><a href="#" th:href="@{/books/edit/{bookid} (bookid = ${row.id})}">Update</a> -
+            <td th:classappend="${hide ? 'hidden' : ''}">
+                <a href="#" th:href="@{/books/edit/{bookid} (bookid = ${row.id})}">Update</a>
                 <a href="#" th:href="@{/books/delete/{bookid} (bookid = ${row.id})}">Delete</a>
             </td>
         </tr>
