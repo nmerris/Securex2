@@ -1,10 +1,12 @@
 package byAJ.Securex.controllers;
 
 import byAJ.Securex.UserService;
+import byAJ.Securex.models.Book;
 import byAJ.Securex.models.User;
 import byAJ.Securex.repositories.RoleRepository;
 import byAJ.Securex.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,21 +37,56 @@ public class HomeController {
 
     @GetMapping("/login")
     public String login(Model model){
+
+//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++ in loginPost, Principal.?: " + loggedInPerson.getName());
+
+
         model.addAttribute("message", "Please login or create a new account");
         return "login";
     }
 
-    @PostMapping("/login")
-    public String loginPost(Principal loggedInPerson) {
 
-//        userService.
+    // you can get either Principal OR Authenticaion objects after a user logs in.. Authentication has more info, may or may not need it
+    @GetMapping("/justloggedin")
+    public String justLoggedIn(Principal principal, Model model) {
+//    public String justLoggedIn(Authentication authentication) {
 
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++ in loginPost, Principal.?: " + loggedInPerson.getName());
+//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++ in /justloggedin get, Authentication.getName: " + authentication.getAuthorities());
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++ in /justloggedin get, Principal.getName: " + principal.getName());
 
-        // TODO send user to appropriate placed based on their ROLE
 
-        return "index";// change this per above comment
+        // Principal.getName returns the USERname not the firstName or lastName
+        // username MUST be unique, which is typical of usernames in the real world, could also go by email or whatever
+        User currentUser = userService.findByUsername(principal.getName());
+
+        if(currentUser.isLibrarian()) {
+            // kinda silly to go straight to bookform, should really let user choose where to go next, ideally would
+            // want to disable navbar links based on logged in users role
+            model.addAttribute("book", new Book());
+            model.addAttribute("message", "Welcome Librarian " + currentUser.getFullName());
+
+            return "bookform";
+        }
+        else {
+            model.addAttribute("message", "Welcome " + currentUser.getFullName());
+            return "listbooks";
+        }
+
     }
+
+
+    // never gets called.....
+//    @PostMapping("/login")
+//    public String loginPost(Principal loggedInPerson) {
+//System.out.println("######################################## just entered /login post");
+////        userService.
+//
+//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++ in loginPost, Principal.?: " + loggedInPerson.getName());
+//
+//        // TODO send user to appropriate placed based on their ROLE
+//
+//        return "register";// change this per above comment
+//    }
 
     @GetMapping("/register")
     public String registerGet(Model model) {

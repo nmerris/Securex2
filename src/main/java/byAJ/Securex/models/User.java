@@ -49,6 +49,18 @@ public class User {
     }
 
 
+    // if User is a Librarian, return true, otherwise return false
+    public boolean isLibrarian() {
+        for (Role r: roles) {
+            if(r.getRole().equals("ROLE_LIBRARIAN")) return true;
+        }
+        return false;
+    }
+
+    public String getFullName() {
+        return String.format("%s %s", firstName, lastName);
+    }
+
     // add a single role to this user
     public void addRole(Role role) {
         roles.add(role);
