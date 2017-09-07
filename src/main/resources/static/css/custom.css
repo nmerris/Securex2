@@ -1,0 +1,5 @@
+/* to account for the fix navbar */
+body {
+    padding-top: 70px;
+    /*height: 100%;*/
+}

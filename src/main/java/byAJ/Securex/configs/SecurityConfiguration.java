@@ -18,7 +18,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().anyRequest().authenticated();
+                .authorizeRequests()
+                // always allow access to all our static folders
+                .antMatchers("/css/**", "/js/**", "/fonts/**", "/img/**")
+                .permitAll();
+//                .authorizeRequests().anyRequest().authenticated();
         http
                 .formLogin().failureUrl("/login?error")
                 .defaultSuccessUrl("/")
