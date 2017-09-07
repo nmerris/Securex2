@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org ">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Register for a new account</title>
+
+    <th:block th:replace="base :: head"></th:block>
+</head>
+<body>
+
+<th:block th:replace="base :: nav"></th:block>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h3>Register for new account</h3>
+    </div>
+    <br />
+
+    <form autocomplete="off" action="#" th:action="@{~/register}" th:object="${newUser}" method="post">
+
+        First Name<mark><strong><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></strong></mark>
+        <input type="text" id="firstName" placeholder="First Name" th:field="*{firstName}"/><br/>
+
+        Last Name<mark><strong><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></strong></mark>
+        <input type="text" id="lastName" placeholder="Last Name" th:field="*{lastName}"/><br/>
+
+        Email<mark><strong><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span></strong></mark>
+        <input type="text" id="email" placeholder="Email" th:field="*{email}"/><br/>
+
+        User Name<mark><strong><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></strong></mark>
+        <input type="text" id="username" placeholder="User Name" th:field="*{username}"/><br/>
+
+        Password<mark><strong><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></strong></mark>
+        <input type="text" id="password" placeholder="Password" th:field="*{password}"/><br/>
+
+        Select an account type
+        <select name="selectedRole">
+            <option value="ROLE_USER">User</option>
+            <option value="ROLE_LIBRARIAN">Librarian</option>
+        </select>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+</div><!-- /.container -->
+
+<th:block th:replace="base :: footlinks"></th:block>
+</body>
+</html>

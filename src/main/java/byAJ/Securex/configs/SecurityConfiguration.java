@@ -20,7 +20,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http
                 .authorizeRequests()
                 // always allow access to all our static folders
-                .antMatchers("/css/**", "/js/**", "/fonts/**", "/img/**")
+                .antMatchers("/css/**", "/js/**", "/fonts/**", "/img/**", "/index")
                 .permitAll();
 //                .authorizeRequests().anyRequest().authenticated();
         http
@@ -35,6 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
+        auth.inMemoryAuthentication().withUser("user").password("pass").roles("USER");
     }
 }

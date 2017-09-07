@@ -10,13 +10,14 @@
     <th:block th:replace="base :: head"></th:block>
 </head>
 <body>
+
 <th:block th:replace="base :: nav"></th:block>
 
 <div class="container">
 
     <div class="starter-template">
         <h1>Securex</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br/> All you get is this text and a mostly barebones HTML document.</p>
+        <h3>Please login</h3>
     </div>
     <br />
     <div th:if="${param.error}">
@@ -30,6 +31,11 @@
         <div><label> Password: <input type="password" name="password"/> </label></div>
         <div><input type="submit" value="Sign In"/></div>
     </form>
+
+    <!-- register for new account -->
+
+
+
 </div><!-- /.container -->
 
 <th:block th:replace="base :: footlinks"></th:block>
