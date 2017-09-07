@@ -3,6 +3,7 @@ package byAJ.Securex.controllers;
 import byAJ.Securex.UserService;
 import byAJ.Securex.models.Book;
 import byAJ.Securex.models.User;
+import byAJ.Securex.repositories.BookRepository;
 import byAJ.Securex.repositories.RoleRepository;
 import byAJ.Securex.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class HomeController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    BookRepository bookRepository;
 
     @Autowired
     UserService userService;
@@ -69,6 +73,7 @@ public class HomeController {
         }
         else {
             model.addAttribute("message", "Welcome " + currentUser.getFullName());
+            model.addAttribute("books", bookRepository.findAll());
             return "listbooks";
         }
 

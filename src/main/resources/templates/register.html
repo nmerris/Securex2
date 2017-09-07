@@ -23,7 +23,7 @@
         <form autocomplete="off" action="#" th:action="@{~/register}" th:object="${newUser}" method="post">
 
             First Name<mark><strong><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></strong></mark>
-            <input type="text" id="firstName" placeholder="First Name" th:field="*{firstName}"/><br/>
+            <div></dive><input type="text" id="firstName" placeholder="First Name" th:field="*{firstName}"/></div><br/>
 
             Last Name<mark><strong><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></strong></mark>
             <input type="text" id="lastName" placeholder="Last Name" th:field="*{lastName}"/><br/>
