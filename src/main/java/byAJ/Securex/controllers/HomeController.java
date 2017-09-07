@@ -74,6 +74,16 @@ public class HomeController {
 
     }
 
+    @GetMapping("/loggedout")
+    public String loggOutGet(Principal principal, Model model) {
+        // seems that Principal is null here every time, prob. because at this point, the user has already been logged out
+//        model.addAttribute("message", userService.findByUsername(principal.getName()).getFullName() + ", thank you for using SecureX!");
+        return "logout";
+    }
+
+
+
+
 
     // never gets called.....
 //    @PostMapping("/login")

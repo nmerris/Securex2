@@ -57,12 +57,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         // login/out
         http
                 .formLogin().failureUrl("/login?error")
+                // there is NO post route for /login, I tried and it never gets called, instead the defaultSuccessUrl route gets called
                 .defaultSuccessUrl("/justloggedin")
                 .and()
                 .formLogin().loginPage("/login")
                     .permitAll()
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/loggedout")
                     .permitAll();
 
         http
